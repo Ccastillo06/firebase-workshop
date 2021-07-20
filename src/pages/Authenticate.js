@@ -17,6 +17,10 @@ function Authenticate({ onLogin }) {
     onLogin({ email, password });
   }
 
+  function handleGoogleLogin() {
+    // TODO: Add google login with Firebase Authentication
+  }
+
   return (
     <Box p={4}>
       <Heading as="h2" size="lg">
