@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isCurrentUser(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function existingData() {
+      return resource.data;
+    }
+
+		function incomingData() {
+      return request.resource.data;
+    }
+
+    match /expenses/{id} {
+      allow read, delete: if isSignedIn() && isCurrentUser(existingData().userId);
+      allow create, update: if isSignedIn() && isCurrentUser(incomingData().userId);
+    }
+  }
+}

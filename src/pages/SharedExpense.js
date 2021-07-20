@@ -1,21 +1,28 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Heading } from '@chakra-ui/layout';
+import { useHistory, useParams } from 'react-router-dom';
+import { Box, Divider, Heading } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/spinner';
 import { v4 as uuid } from 'uuid';
 
 import Participants from '../components/Participants';
 import Expenses from '../components/Expenses';
 import Payments from '../components/Payments';
+import {
+  deleteExpenseById,
+  getExpenseById,
+  saveExpenseChanges,
+} from '../db/expenses';
+import { Button } from '@chakra-ui/button';
 
-function SharedExpense({ allExpenses }) {
+function SharedExpense() {
   const [sharedExpenses, setSharedExpenses] = useState(null);
+  const [pendingChanges, setPendingChannges] = useState(false);
+
+  const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
-    // TODO: Change this so it uses Firestore to load the value
-    const pageExpenses = allExpenses.find((e) => e.id === id);
-    setSharedExpenses(pageExpenses);
+    getExpenseById(id).then(setSharedExpenses);
   }, [id]);
 
   function handleSaveParticipant(e) {
@@ -30,7 +37,9 @@ function SharedExpense({ allExpenses }) {
       ],
     });
 
-    // TODO: Save in Firestore
+    if (!pendingChanges) {
+      setPendingChannges(true);
+    }
   }
 
   function handleSaveExpense(e) {
@@ -51,7 +60,22 @@ function SharedExpense({ allExpenses }) {
       ],
     });
 
-    // TODO: Save in Firestore
+    if (!pendingChanges) {
+      setPendingChannges(true);
+    }
+  }
+
+  async function handleSaveChanges() {
+    const { id, ...restExpense } = sharedExpenses;
+
+    await saveExpenseChanges(id, restExpense);
+    setPendingChannges(false);
+  }
+
+  async function handleDeleteExpense() {
+    const { id } = sharedExpenses;
+    await deleteExpenseById(id);
+    history.push('/');
   }
 
   if (!sharedExpenses) {
@@ -68,6 +92,17 @@ function SharedExpense({ allExpenses }) {
         {sharedExpenses.title}
       </Heading>
 
+      {pendingChanges ? (
+        <Button
+          onClick={handleSaveChanges}
+          bgColor="green.500"
+          color="white"
+          marginTop={2}
+        >
+          Guardar cambios
+        </Button>
+      ) : null}
+
       <Expenses
         expenseList={sharedExpenses.expenses}
         handleSaveExpense={handleSaveExpense}
@@ -83,6 +118,16 @@ function SharedExpense({ allExpenses }) {
         expenseList={sharedExpenses.expenses}
         participantList={sharedExpenses.participants}
       />
+
+      <Divider marginTop={2} />
+      <Button
+        onClick={handleDeleteExpense}
+        bgColor="red.500"
+        color="white"
+        marginTop={2}
+      >
+        Eliminar gastos
+      </Button>
     </Box>
   );
 }

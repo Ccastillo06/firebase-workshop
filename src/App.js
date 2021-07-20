@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import { Box } from '@chakra-ui/layout';
 
@@ -6,34 +6,45 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import SharedExpense from './pages/SharedExpense';
 import Authenticate from './pages/Authenticate';
-
-import { mockAllExpenses } from './mockExpenses';
+import firebase from './config/firebase';
 
 function App() {
   const [user, setUser] = useState(null);
-  // TODO: Change to load all user expenses from Firestore
-  const [allExpenses, setAllExpenses] = useState(mockAllExpenses);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        const currentUser = {
+          id: firebaseUser.uid,
+          email: firebaseUser.email,
+        };
+
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
+  function handleLogout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => setUser(null));
+  }
 
   return (
     <Box>
-      <Header hasUser={!!user} onLogout={() => setUser(null)} />
+      <Header hasUser={!!user} onLogout={handleLogout} />
 
       <Box as="main">
         <Switch>
           <Route path="/expenses/:id" exact>
-            {user ? (
-              <SharedExpense allExpenses={allExpenses} />
-            ) : (
-              <Redirect to="/" />
-            )}
+            {user ? <SharedExpense allExpenses={[]} /> : <Redirect to="/" />}
           </Route>
 
           <Route path="/">
-            {user ? (
-              <Home allExpenses={allExpenses} setAllExpenses={setAllExpenses} />
-            ) : (
-              <Authenticate onLogin={setUser} />
-            )}
+            {user ? <Home user={user} /> : <Authenticate onLogin={setUser} />}
           </Route>
         </Switch>
       </Box>

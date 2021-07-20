@@ -1,15 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@chakra-ui/button';
 import { Box, Divider, Heading, Stack, Text } from '@chakra-ui/layout';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input } from '@chakra-ui/input';
 
-import { getNewExpense } from '../mockExpenses';
+import { getUserExpenses, createUserExpense } from '../db/expenses';
 
-function Home({ allExpenses, setAllExpenses }) {
-  function handleAddExpense(title) {
-    setAllExpenses([...allExpenses, getNewExpense(title)]);
+export const getNewExpense = (title, userId) => ({
+  expenses: [],
+  participants: [],
+  title,
+  userId,
+});
+
+function Home({ user }) {
+  const [allExpenses, setAllExpenses] = useState([]);
+  const { id } = user || {};
+
+  useEffect(() => {
+    if (id && !allExpenses.length) {
+      getUserExpenses(id).then(setAllExpenses);
+    }
+  }, [id, allExpenses.length]);
+
+  async function handleAddExpense(title) {
+    const newExpense = getNewExpense(title, id);
+    const createdExpense = await createUserExpense(newExpense);
+
+    setAllExpenses([...allExpenses, createdExpense]);
   }
 
   return (
@@ -36,11 +55,11 @@ function Home({ allExpenses, setAllExpenses }) {
       <Box marginTop={4}>
         <Box
           as="form"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
 
             const title = e.target[0].value.trim().toLowerCase();
-            handleAddExpense(title);
+            await handleAddExpense(title);
 
             e.target.reset();
           }}
