@@ -1,15 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@chakra-ui/button';
 import { Box, Divider, Heading, Stack, Text } from '@chakra-ui/layout';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { Input } from '@chakra-ui/input';
+import { v4 as uuid } from 'uuid';
 
-import { getNewExpense } from '../mockExpenses';
+import { getUserExpenses, createNewExpense } from '../db/expenses';
 
-function Home({ allExpenses, setAllExpenses }) {
-  function handleAddExpense(title) {
-    setAllExpenses([...allExpenses, getNewExpense(title)]);
+export const getNewExpense = (title, userId) => ({
+  id: uuid(),
+  title,
+  userId,
+  expenses: [],
+  participants: [],
+});
+
+function Home({ userId }) {
+  const [allExpenses, setAllExpenses] = useState([]);
+
+  useEffect(() => {
+    if (userId) {
+      getUserExpenses(userId).then((expenses) => {
+        setAllExpenses(expenses);
+      });
+    }
+  }, [userId]);
+
+  async function handleAddExpense(title) {
+    const newExpense = getNewExpense(title, userId);
+    const createdExpense = await createNewExpense(newExpense);
+
+    setAllExpenses([...allExpenses, createdExpense]);
   }
 
   return (
@@ -23,9 +45,9 @@ function Home({ allExpenses, setAllExpenses }) {
           <Box padding={4} shadow="md" borderWidth="1px" key={expense.id}>
             <Link to={`/expenses/${expense.id}`}>
               <Heading fontSize="xl">{expense.title}</Heading>
-              <Text marginTop={2}>
+              {/* <Text marginTop={2}>
                 Participantes: {expense.participants.length}
-              </Text>
+              </Text> */}
             </Link>
           </Box>
         ))}

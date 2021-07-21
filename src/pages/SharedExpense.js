@@ -1,22 +1,31 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Heading } from '@chakra-ui/layout';
+import { Box, Divider, Heading } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/spinner';
 import { v4 as uuid } from 'uuid';
 
 import Participants from '../components/Participants';
 import Expenses from '../components/Expenses';
 import Payments from '../components/Payments';
+import { getExpenseById, updateExpenseById } from '../db/expenses';
+import { Button } from '@chakra-ui/button';
 
-function SharedExpense({ allExpenses }) {
+function SharedExpense() {
   const [sharedExpenses, setSharedExpenses] = useState(null);
+  const [hasChanges, setHasChanges] = useState(false);
+
   const { id } = useParams();
 
   useEffect(() => {
-    // TODO: Change this so it uses Firestore to load the value
-    const pageExpenses = allExpenses.find((e) => e.id === id);
-    setSharedExpenses(pageExpenses);
+    getExpenseById(id).then((pageExpenses) => {
+      setSharedExpenses(pageExpenses);
+    });
   }, [id]);
+
+  async function handleSaveChanges() {
+    await updateExpenseById(id, sharedExpenses);
+    setHasChanges(false);
+  }
 
   function handleSaveParticipant(e) {
     setSharedExpenses({
@@ -30,7 +39,7 @@ function SharedExpense({ allExpenses }) {
       ],
     });
 
-    // TODO: Save in Firestore
+    setHasChanges(true);
   }
 
   function handleSaveExpense(e) {
@@ -51,7 +60,7 @@ function SharedExpense({ allExpenses }) {
       ],
     });
 
-    // TODO: Save in Firestore
+    setHasChanges(true);
   }
 
   if (!sharedExpenses) {
@@ -83,6 +92,18 @@ function SharedExpense({ allExpenses }) {
         expenseList={sharedExpenses.expenses}
         participantList={sharedExpenses.participants}
       />
+
+      <Divider marginTop={2} />
+
+      {hasChanges ? (
+        <Button
+          color="white"
+          backgroundColor="blue.400"
+          onClick={handleSaveChanges}
+        >
+          Guardar cambios
+        </Button>
+      ) : null}
     </Box>
   );
 }

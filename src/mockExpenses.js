@@ -1,12 +1,5 @@
 import { v4 as uuid } from 'uuid';
 
-export const getNewExpense = (title) => ({
-  id: uuid(),
-  title,
-  expenses: [],
-  participants: [],
-});
-
 export const mockAllExpenses = [
   {
     id: '012-345-678',
