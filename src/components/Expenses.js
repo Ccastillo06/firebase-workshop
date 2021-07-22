@@ -27,9 +27,25 @@ import {
   Select,
   useDisclosure,
 } from '@chakra-ui/react';
+import { uploadExpenseImage } from '../config/storage';
 
-function Expenses({ expenseList, handleSaveExpense, participantList }) {
+function Expenses({
+  expenseList,
+  handleSaveExpense,
+  handleEditExpense,
+  participantList,
+  sharedExpenseId,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  async function handleUploadImage(e, expenseId) {
+    const file = e.target[0].files[0]; // Get the file from the input file
+    const fileType = file.type.split('/')[1]; // File type is image/png
+
+    const filename = `${sharedExpenseId}/${expenseId}.${fileType}`;
+    const downloadUrl = await uploadExpenseImage(file, filename);
+    await handleEditExpense(expenseId, downloadUrl);
+  }
 
   return (
     <>
@@ -51,6 +67,40 @@ function Expenses({ expenseList, handleSaveExpense, participantList }) {
                 <Text>
                   <b>Pagado por:</b> {expense.paidBy.name}
                 </Text>
+
+                {expense.imageUrl ? (
+                  <Box marginTop={2}>
+                    <img src={expense.imageUrl} alt={expense.title} />
+                  </Box>
+                ) : (
+                  <Box
+                    as="form"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleUploadImage(e, expense.id);
+                    }}
+                  >
+                    <FormControl
+                      id={`${expense.id}-file`}
+                      flexDirection="column"
+                      marginTop={2}
+                      isRequired
+                    >
+                      <FormLabel>Añade una imagen</FormLabel>
+                      <Box overflow="hidden">
+                        <input
+                          type="file"
+                          name="file"
+                          accept="image/png, image/gif, image/jpeg"
+                        />
+                      </Box>
+                    </FormControl>
+
+                    <Button marginTop={2} type="submit">
+                      Subir
+                    </Button>
+                  </Box>
+                )}
               </ListItem>
 
               <Divider paddingTop={1} />

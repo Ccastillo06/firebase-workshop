@@ -78,6 +78,29 @@ function SharedExpense() {
     history.push('/');
   }
 
+  async function handleEditExpense(expenseId, imageUrl) {
+    const editedExpenses = sharedExpenses.expenses.map((expense) => {
+      if (expense.id === expenseId) {
+        return {
+          ...expense,
+          imageUrl,
+        };
+      }
+
+      return expense;
+    });
+
+    const newSharedExpenses = {
+      ...sharedExpenses,
+      expenses: editedExpenses,
+    };
+
+    setSharedExpenses(newSharedExpenses);
+
+    const { id, ...restExpense } = newSharedExpenses;
+    await saveExpenseChanges(id, restExpense);
+  }
+
   if (!sharedExpenses) {
     return (
       <Box p={4} textAlign="center">
@@ -104,8 +127,10 @@ function SharedExpense() {
       ) : null}
 
       <Expenses
+        sharedExpenseId={sharedExpenses.id}
         expenseList={sharedExpenses.expenses}
         handleSaveExpense={handleSaveExpense}
+        handleEditExpense={handleEditExpense}
         participantList={sharedExpenses.participants}
       />
 
