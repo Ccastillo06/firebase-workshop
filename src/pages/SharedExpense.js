@@ -63,6 +63,29 @@ function SharedExpense() {
     setHasChanges(true);
   }
 
+  async function handleAddImageToExpense(expenseId, imageUrl) {
+    const updatedExpenses = sharedExpenses.expenses.map((expense) => {
+      if (expense.id === expenseId) {
+        return {
+          ...expense,
+          imageUrl,
+        };
+      }
+
+      return expense;
+    });
+
+    const updatedSharedExpenses = {
+      ...sharedExpenses,
+      expenses: updatedExpenses,
+    };
+
+    const { id, ...resExpenses } = updatedSharedExpenses;
+    await updateExpenseById(id, resExpenses);
+
+    setSharedExpenses(updatedSharedExpenses);
+  }
+
   if (!sharedExpenses) {
     return (
       <Box p={4} textAlign="center">
@@ -78,6 +101,8 @@ function SharedExpense() {
       </Heading>
 
       <Expenses
+        handleAddImageToExpense={handleAddImageToExpense}
+        sharedExpenseId={sharedExpenses.id}
         expenseList={sharedExpenses.expenses}
         handleSaveExpense={handleSaveExpense}
         participantList={sharedExpenses.participants}

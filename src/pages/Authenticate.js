@@ -51,7 +51,6 @@ function Authenticate({ onLogin }) {
   }
 
   function handleGoogleLogin() {
-    // TODO: Add google login with Firebase Authentication
     // 1. Crear un provider de Google
     const provider = new firebase.auth.GoogleAuthProvider();
     // 2. Abro popup de inicio de sesión con el provider

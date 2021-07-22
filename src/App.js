@@ -9,14 +9,9 @@ import SharedExpense from './pages/SharedExpense';
 import Authenticate from './pages/Authenticate';
 import firebase from './config/firebase';
 
-import { mockAllExpenses } from './mockExpenses';
-
-
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  // TODO: Change to load all user expenses from Firestore
-  const [allExpenses, setAllExpenses] = useState(mockAllExpenses);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((currentUser) => {
@@ -56,11 +51,7 @@ function App() {
         ) : (
           <Switch>
             <Route path="/expenses/:id" exact>
-              {user ? (
-                <SharedExpense allExpenses={allExpenses} />
-              ) : (
-                <Redirect to="/" />
-              )}
+              {user ? <SharedExpense /> : <Redirect to="/" />}
             </Route>
 
             <Route path="/">

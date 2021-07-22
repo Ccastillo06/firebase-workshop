@@ -1,0 +1,58 @@
+[debug] [2021-07-22T16:49:14.322Z] ----------------------------------------------------------------------
+[debug] [2021-07-22T16:49:14.324Z] Command:       /Users/cristiancastillo/.nvm/versions/node/v12.16.1/bin/node /Users/cristiancastillo/.nvm/versions/node/v12.16.1/bin/firebase functions:shell
+[debug] [2021-07-22T16:49:14.325Z] CLI Version:   9.16.0
+[debug] [2021-07-22T16:49:14.325Z] Platform:      darwin
+[debug] [2021-07-22T16:49:14.325Z] Node Version:  v12.16.1
+[debug] [2021-07-22T16:49:14.326Z] Time:          Thu Jul 22 2021 18:49:14 GMT+0200 (GMT+02:00)
+[debug] [2021-07-22T16:49:14.326Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-07-22T16:49:14.374Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-07-22T16:49:14.374Z] > authorizing via signed-in user (cristiancastillodev@gmail.com)
+[debug] [2021-07-22T16:49:14.375Z] [iam] checking project split-and-share-workshop for permissions ["firebase.projects.get"]
+[debug] [2021-07-22T16:49:14.377Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/split-and-share-workshop:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-07-22T16:49:15.118Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 22 Jul 2021 16:49:15 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=630","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] ⚠  Your requested "node" version "14" doesn't match your global version "12" {"metadata":{"emulator":{"name":"functions"},"message":"Your requested \"node\" version \"14\" doesn't match your global version \"12\""}}
+[debug] [2021-07-22T16:49:15.146Z] defaultcredentials: writing to file /Users/cristiancastillo/.config/firebase/cristiancastillodev_gmail_com_application_default_credentials.json
+[debug] [2021-07-22T16:49:15.148Z] DEBUG: Setting GAC to /Users/cristiancastillo/.config/firebase/cristiancastillodev_gmail_com_application_default_credentials.json
+[debug] [2021-07-22T16:49:15.150Z] > refreshing access token with scopes: []
+[debug] [2021-07-22T16:49:15.151Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-07-22T16:49:15.299Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","date":"Thu, 22 Jul 2021 16:49:15 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-07-22T16:49:15.351Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/split-and-share-workshop/adminSdkConfig [none]
+[debug] [2021-07-22T16:49:15.743Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/split-and-share-workshop/adminSdkConfig 200
+[debug] [2021-07-22T16:49:15.743Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/split-and-share-workshop/adminSdkConfig {"projectId":"split-and-share-workshop","storageBucket":"split-and-share-workshop.appspot.com","locationId":"europe-west"}
+[debug] [2021-07-22T16:49:15.773Z] [functions] Watching "/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions" for Cloud Functions...
+[debug] [2021-07-22T16:49:15.785Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-07-22T16:49:15.786Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-07-22T16:49:15.786Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-07-22T16:49:15.786Z] DEBUG: [worker-~diagnostic~-4c001f0c-32d1-403f-a8b3-fee682cd7701]: Assigning socketPath: /var/folders/28/958j8k4x0jn9clg4h45jdhjm0000gn/T/fire_emu_15228.sock
+[debug] [2021-07-22T16:49:15.787Z] DEBUG: [worker-~diagnostic~-4c001f0c-32d1-403f-a8b3-fee682cd7701]: BUSY
+[debug] [2021-07-22T16:49:15.932Z] DEBUG: [runtime-status] [15228] Functions runtime initialized. {"cwd":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions","node_version":"12.16.1"}
+[debug] [2021-07-22T16:49:15.932Z] DEBUG: [runtime-status] [15228] Disabled runtime features: undefined
+[debug] [2021-07-22T16:49:15.934Z] DEBUG: [runtime-status] [15228] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.11.0","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-07-22T16:49:15.935Z] DEBUG: [runtime-status] [15228] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.14.1","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-07-22T16:49:15.936Z] DEBUG: [runtime-status] [15228] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.14.1","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-07-22T16:49:15.938Z] DEBUG: [runtime-status] [15228] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-07-22T16:49:15.938Z] DEBUG: [runtime-status] [15228] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.14.1","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-07-22T16:49:15.968Z] DEBUG: [runtime-status] [15228] Checked functions.config() {"config":{}}
+[debug] [2021-07-22T16:49:15.969Z] DEBUG: [runtime-status] [15228] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.14.1","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-07-22T16:49:15.969Z] DEBUG: [runtime-status] [15228] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.14.1","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-07-22T16:49:15.970Z] DEBUG: [runtime-status] [15228] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.11.0","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-07-22T16:49:15.970Z] DEBUG: [runtime-status] [15228] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.14.1","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-07-22T16:49:15.970Z] DEBUG: [runtime-status] [15228] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.11.0","resolution":"/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/node_modules/firebase-admin/lib/index.js"}}
+[warn] ⚠  It looks like you're trying to access functions.config().gmail but there is no value there. You can learn more about setting up config here: https://firebase.google.com/docs/functions/local-emulator {"metadata":{"emulator":{"name":"functions"},"message":"It looks like you're trying to access functions.config().gmail but there is no value there. You can learn more about setting up config here: https://firebase.google.com/docs/functions/local-emulator"}}
+[warn] ⚠  TypeError: Cannot read property 'email' of undefined
+    at Object.<anonymous> (/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/triggers/sendWelcomeEmail.js:4:44)
+    at Module._compile (internal/modules/cjs/loader.js:1158:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1178:10)
+    at Module.load (internal/modules/cjs/loader.js:1002:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:901:14)
+    at Module.require (internal/modules/cjs/loader.js:1044:19)
+    at require (internal/modules/cjs/helpers.js:77:18)
+    at Object.<anonymous> (/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/index.js:1:28)
+    at Module._compile (internal/modules/cjs/loader.js:1158:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1178:10) {"metadata":{"emulator":{"name":"functions"},"message":"TypeError: Cannot read property 'email' of undefined\n    at Object.<anonymous> (/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/triggers/sendWelcomeEmail.js:4:44)\n    at Module._compile (internal/modules/cjs/loader.js:1158:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1178:10)\n    at Module.load (internal/modules/cjs/loader.js:1002:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:901:14)\n    at Module.require (internal/modules/cjs/loader.js:1044:19)\n    at require (internal/modules/cjs/helpers.js:77:18)\n    at Object.<anonymous> (/Users/cristiancastillo/Documents/upgrade/workshop-firebase/functions/index.js:1:28)\n    at Module._compile (internal/modules/cjs/loader.js:1158:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1178:10)"}}
+[warn] ⚠  We were unable to load your functions code. (see above) {"metadata":{"emulator":{"name":"functions"}}}
+[debug] [2021-07-22T16:49:16.009Z] DEBUG: [worker-~diagnostic~-4c001f0c-32d1-403f-a8b3-fee682cd7701]: exited
+[debug] [2021-07-22T16:49:16.009Z] DEBUG: [worker-~diagnostic~-4c001f0c-32d1-403f-a8b3-fee682cd7701]: FINISHED
